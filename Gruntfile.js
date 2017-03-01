@@ -1,14 +1,15 @@
-module.exports= function(grunt){
+module.exports = function(grunt) {
     grunt.initConfig({
         nodemon: {
-            dev: {
-                script: 'server.js',
-                options:{
-                   // watch: ['server.js']
-                }
-                }
-            }
+                 all: {
+                        script: 'server.js',
+                        options: {
+                            watchedExtensions: ['js']
+                        }
+                    }
+                 }
     });
-
+ 
     grunt.loadNpmTasks('grunt-nodemon');
-}
+    grunt.registerTask('default',['nodemon']);
+};
