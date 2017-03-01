@@ -1,6 +1,7 @@
-var bcrypt = require("bcrypt");
+var crypto = require("crypto-js");
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var passwordCryptKey = 'FZWX';
 
 var userSchema = new Schema({
     FullName   :   {type: String, require: true},
@@ -26,17 +27,10 @@ userSchema.pre('save', function(next) {
     }
 
     if(this.isModified("Password")|| this.isNew){
-        bcrypt.genSalt(10, function(err, salt) {
-            if(err){
-                return next(err);
-            }
-            bcrypt.hash(newUser.Password, salt, function(err, hash) {
-                if(err){
-                    return next(err);
-                }
-                newUser.Password = hash;
-            });
-        });
+        var cryptedPass = crypto.AES.encrypt(newUser.Password,passwordCryptKey);
+        if(cryptedPass){
+            newUser.Password = cryptedPass;
+        }
     }
     next();
 });
