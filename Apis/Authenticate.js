@@ -11,7 +11,12 @@ module.exports.controller = function (apiRouts){
                 UserName: req.body.userName,
                 Password: req.body.password
             });
-            newUser.save();
+            newUser.save(function(err){
+                if(err){
+                    resp.json({message: "Error Occured - "+ err});
+                }
+                resp.json({message: "User Created"});
+            });
         }
     });
     
