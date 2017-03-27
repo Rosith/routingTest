@@ -12,7 +12,7 @@ require("./Configurations/route")(express,app);
 
 
 ///Starting server
-app.listen(config.port,function(){
+app.listen(process.env.PORT || config.port,function(){
     console.log("Svasthiya is running at port: "+ config.port);
 });
 
